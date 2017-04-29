@@ -152,10 +152,47 @@ void mainMenu()	//Menu g³ówne, wybór problemu do rozwi¹zania
 
 }
 
+bool readFromFile(string fileName)
+{
+	graph = new Graph();
+	
+	return graph->loadFromFile(fileName);
+
+
+}
+
+/*
+TODO 
++Uzupe³niæ klasê grafu
++Uzupe³niæ metody execute, wyœwietlanie wyniku operacji zawrzeæ w nich.
++Dodaæ graph jako argument konstruktorach algorytmów.
++Dodaæ reprezentacje macierzowe i listowe grafu. Wiêcej w schemacie UML.
++Dodaæ odczyt grafu z pliku.
+*/
+
 int main()
 {
+	string fileName;
+	cout << "Nazwa pliku z grafem: ";
+	cin >> fileName;
+	while (cin.fail())
+	{
+		cout << "Blad, podaj ponownie nazwe pliku" << endl;
+		cin.clear();
+		cin.ignore();
+		cin >> fileName;
+	}
+
+	if (readFromFile(fileName))
+	{
+		mainMenu();
+	}
+	else
+	{
+		cout << "Program zostanie zamkniety!" << endl;
+	}
+
 	
-	mainMenu();
 
 	system("PAUSE");
     return 0;

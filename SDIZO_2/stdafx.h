@@ -14,6 +14,10 @@
 #include <tchar.h>
 #include <Windows.h>
 #include <random>
+#include <string>
+#include <string.h>
+#include <list>
+#include <fstream>
 #include "Graph.h"
 #include "Algorithm.h"
 #include "Dijkstra.h"
