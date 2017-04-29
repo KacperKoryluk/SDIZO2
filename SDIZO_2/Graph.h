@@ -21,7 +21,7 @@ public:
 };
 
 
-
+//Rzeczy które nie dzia³aj¹, ale kiedyœ bêd¹ musia³y
 /*
 class Element
 {

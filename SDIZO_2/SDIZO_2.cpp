@@ -168,6 +168,7 @@ TODO
 +Dodaæ graph jako argument konstruktorach algorytmów.
 +Dodaæ reprezentacje macierzowe i listowe grafu. Wiêcej w schemacie UML.
 +Dodaæ odczyt grafu z pliku.
++Uzupe³niæ metody wyœwietlaj¹ce Postaæ macierzow¹ i listow¹ grafu
 */
 
 int main()
