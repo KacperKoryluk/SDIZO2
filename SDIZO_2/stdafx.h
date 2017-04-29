@@ -9,6 +9,16 @@
 
 #include <stdio.h>
 #include <tchar.h>
+#include <iostream>
+#include <conio.h>
+#include "Graph.h"
+#include "Algorithm.h"
+#include "Dijkstra.h"
+#include "BellmanFord.h"
+#include "Prim.h"
+#include "Kruskal.h"
+
+using namespace std;
 
 
 
