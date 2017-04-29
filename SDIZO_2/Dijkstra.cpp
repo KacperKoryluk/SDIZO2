@@ -15,3 +15,8 @@ Dijkstra::Dijkstra()
 Dijkstra::~Dijkstra()
 {
 }
+
+Dijkstra::Dijkstra(Graph * graph)
+{
+	_graph = graph;
+}

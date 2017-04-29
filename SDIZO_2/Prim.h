@@ -6,7 +6,9 @@ class Prim :
 private:
 
 public:
+	void execute();
 	Prim();
 	~Prim();
+	Prim(Graph * graph);
 };
 

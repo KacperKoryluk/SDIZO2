@@ -16,3 +16,8 @@ BellmanFord::BellmanFord()
 BellmanFord::~BellmanFord()
 {
 }
+
+BellmanFord::BellmanFord(Graph * graph)
+{
+	_graph = graph;
+}

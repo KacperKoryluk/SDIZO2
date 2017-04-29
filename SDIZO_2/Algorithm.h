@@ -4,10 +4,9 @@
 class Algorithm
 {
 protected:
-	Graph graph;
+	Graph * _graph;
 public:
-	virtual void execute();
-	virtual void printResult();
+	virtual void execute() {};
 	Algorithm();
 	~Algorithm();
 };

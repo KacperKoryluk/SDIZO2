@@ -11,6 +11,9 @@
 #include <tchar.h>
 #include <iostream>
 #include <conio.h>
+#include <tchar.h>
+#include <Windows.h>
+#include <random>
 #include "Graph.h"
 #include "Algorithm.h"
 #include "Dijkstra.h"

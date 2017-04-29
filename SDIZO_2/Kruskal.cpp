@@ -15,3 +15,8 @@ Kruskal::Kruskal()
 Kruskal::~Kruskal()
 {
 }
+
+Kruskal::Kruskal(Graph * graph)
+{
+	_graph = graph;
+}

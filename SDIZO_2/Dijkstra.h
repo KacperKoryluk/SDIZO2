@@ -7,5 +7,6 @@ public:
 	void execute();
 	Dijkstra();
 	~Dijkstra();
+	Dijkstra(Graph * graph);
 };
 

@@ -7,5 +7,6 @@ public:
 	void execute();
 	Kruskal();
 	~Kruskal();
+	Kruskal(Graph * graph);
 };
 

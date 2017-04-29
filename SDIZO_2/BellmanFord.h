@@ -1,11 +1,12 @@
 #pragma once
 #include "Algorithm.h"
 class BellmanFord :
-	private Algorithm
+	public Algorithm
 {
 public:
 	void execute();
 	BellmanFord();
 	~BellmanFord();
+	BellmanFord(Graph * graph);
 };
 
