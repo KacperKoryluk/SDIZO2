@@ -17,7 +17,11 @@
 #include <string>
 #include <string.h>
 #include <cstddef>
+
 #include <list>
+#include <queue>
+#include <vector>
+
 #include <fstream>
 #include "Graph.h"
 #include "Algorithm.h"

@@ -27,12 +27,12 @@ void mstMenu()	//Menu minimalnego drzewa rozpinaj¹cego, wybór miêdzy algorytmem 
 		switch (decision)
 		{
 		case '1':
-			_currentAlgorithm = new Kruskal();
+			_currentAlgorithm = new Kruskal(graph);
 			_currentAlgorithm->execute();
 			delete _currentAlgorithm;
 			break;
 		case '2':
-			_currentAlgorithm = new Prim();
+			_currentAlgorithm = new Prim(graph);
 			_currentAlgorithm->execute();
 			delete _currentAlgorithm;
 			break;
@@ -78,13 +78,13 @@ void pathMenu()	//Menu minimalnej œcie¿ki, wybór miêdzy algorytmem Dijkstry i Be
 		switch (decision)
 		{
 		case '1':
-			_currentAlgorithm = new Dijkstra();
+			_currentAlgorithm = new Dijkstra(graph);
 			_currentAlgorithm->execute();
 
 			delete _currentAlgorithm;
 			break;
 		case '2':
-			_currentAlgorithm = new BellmanFord();
+			_currentAlgorithm = new BellmanFord(graph);
 			_currentAlgorithm->execute();
 			delete _currentAlgorithm;
 			break;
@@ -225,7 +225,6 @@ int main()
 
 	
 	delete graph;
-	delete _currentAlgorithm;
 	system("PAUSE");
     return 0;
 }
