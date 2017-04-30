@@ -37,7 +37,8 @@ void mstMenu()	//Menu minimalnego drzewa rozpinaj¹cego, wybór miêdzy algorytmem 
 			delete _currentAlgorithm;
 			break;
 		case 'm':
-
+			cout << "Reprezentacja macierzowa: " << endl;
+			graph->printMatrix();
 			break;
 		case 'l':
 
@@ -87,7 +88,8 @@ void pathMenu()	//Menu minimalnej œcie¿ki, wybór miêdzy algorytmem Dijkstry i Be
 			delete _currentAlgorithm;
 			break;
 		case 'm':
-
+			cout << "Reprezentacja macierzowa: " << endl;
+			graph->printMatrix();
 			break;
 		case 'l':
 
@@ -131,7 +133,8 @@ void mainMenu()	//Menu g³ówne, wybór problemu do rozwi¹zania
 			pathMenu();
 			break;
 		case 'm':
-
+			cout << "Reprezentacja macierzowa: " << endl;
+			graph->printMatrix();
 			break;
 		case 't':
 

@@ -31,7 +31,26 @@ bool Graph::loadFromFile(string fileName)
 			}
 		}
 
+		int tempVertex1, tempVertex2, weight;	
 
+		for (int i = 0; i < edgeAmount; i++)
+		{
+			
+			
+				file >> tempVertex1;
+				file >> tempVertex2;
+				file >> weight;
+
+				if (file.fail())
+				{
+					return false;
+				}
+			
+			_graphMatrix[tempVertex1][tempVertex2] = weight;
+			tempVertex1 = 0; tempVertex2 = 0; weight = 0;
+		}
+
+		
 
 
 
