@@ -16,6 +16,7 @@
 #include <random>
 #include <string>
 #include <string.h>
+#include <cstddef>
 #include <list>
 #include <fstream>
 #include "Graph.h"

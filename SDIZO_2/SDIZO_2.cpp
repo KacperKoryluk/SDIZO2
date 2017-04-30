@@ -61,6 +61,7 @@ void mstMenu()	//Menu minimalnego drzewa rozpinaj¹cego, wybór miêdzy algorytmem 
 
 void pathMenu()	//Menu minimalnej œcie¿ki, wybór miêdzy algorytmem Dijkstry i Bellmana-Forda
 {
+
 	cout << "Menu  path:" << endl
 		<< "1 - Wykonaj algorytm Dijkstry i wyswietl wyniki" << endl
 		<< "2 - Wykonaj algorytm Bellmana-Forda i wyswietl wyniki" << endl
@@ -110,6 +111,39 @@ void pathMenu()	//Menu minimalnej œcie¿ki, wybór miêdzy algorytmem Dijkstry i Be
 	} while (decision != 27);
 }
 
+
+bool readFromFile(string fileName, bool isDirected)
+{
+	delete graph;
+	graph = new Graph();
+
+	return graph->loadFromFile(fileName, isDirected);
+
+
+}
+
+bool prepareGraph(bool isDirected)	//Wywo³ywana w menu, ¿eby przygotowaæ graf zale¿nie od algorytmu (skierowany/nieskierowany)
+{
+	string fileName;
+	cout << "Nazwa pliku z grafem: ";
+	cin >> fileName;
+	while (cin.fail())
+	{
+		cout << "Blad, podaj ponownie nazwe pliku" << endl;
+		cin.clear();
+		cin.ignore();
+		cin >> fileName;
+	}
+
+	if (readFromFile(fileName, isDirected))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
 void mainMenu()	//Menu g³ówne, wybór problemu do rozwi¹zania
 {
 	cout << "Wybor problemu:" << endl
@@ -118,7 +152,7 @@ void mainMenu()	//Menu g³ówne, wybór problemu do rozwi¹zania
 		<< "m - reprezentacja macierzowa grafu" << endl
 		<< "l - reprezentacja listowa grafu" << endl
 		<< "c - czysci ekran" << endl;
-
+	int isDirected;
 	char decision;
 	do
 	{
@@ -127,14 +161,31 @@ void mainMenu()	//Menu g³ówne, wybór problemu do rozwi¹zania
 		switch (decision)
 		{
 		case '1':
-			mstMenu();
+			isDirected = false;
+			if (prepareGraph(isDirected)) //Dla problemu MST krawêdzie s¹ kierowane jako nieskierowane, przekazujê false 
+			{
+				mstMenu();
+			}
+			else
+			{
+				cout << "Blad!" << endl;
+				cout << "Menu glowne: " << endl;
+			} 
 			break;
 		case '2':
-			pathMenu();
+			isDirected = true;
+			if (prepareGraph(isDirected))	//Dla problemu najkrótszej œcie¿ki krawêdzie s¹ traktowane jako skierowane, przekazujê true
+			{
+				pathMenu();
+			}
+			else
+			{
+				cout << "Blad!" << endl;
+				cout << "Menu glowne: " << endl;
+			}
 			break;
-		case 'm':
-			cout << "Reprezentacja macierzowa: " << endl;
-			graph->printMatrix();
+		case 'm':	
+		
 			break;
 		case 't':
 
@@ -155,14 +206,8 @@ void mainMenu()	//Menu g³ówne, wybór problemu do rozwi¹zania
 
 }
 
-bool readFromFile(string fileName)
-{
-	graph = new Graph();
-	
-	return graph->loadFromFile(fileName);
 
 
-}
 
 /*
 TODO 
@@ -176,28 +221,11 @@ TODO
 
 int main()
 {
-	string fileName;
-	cout << "Nazwa pliku z grafem: ";
-	cin >> fileName;
-	while (cin.fail())
-	{
-		cout << "Blad, podaj ponownie nazwe pliku" << endl;
-		cin.clear();
-		cin.ignore();
-		cin >> fileName;
-	}
-
-	if (readFromFile(fileName))
-	{
-		mainMenu();
-	}
-	else
-	{
-		cout << "Program zostanie zamkniety!" << endl;
-	}
+	mainMenu();
 
 	
-
+	delete graph;
+	delete _currentAlgorithm;
 	system("PAUSE");
     return 0;
 }
