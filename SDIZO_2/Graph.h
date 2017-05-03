@@ -12,7 +12,7 @@ private:
 	int firstVertex;
 	int lastVertex;
 	int **_graphMatrix;
-	
+	//Dodaæ reprezentacjê listow¹ grafu
 public:
 
 	int getEdgeAmount();

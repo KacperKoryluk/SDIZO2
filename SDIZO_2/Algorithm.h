@@ -6,6 +6,7 @@ class Algorithm
 protected:
 	Graph * _graph;
 public:
+	
 	virtual void execute() {};
 	Algorithm();
 	~Algorithm();

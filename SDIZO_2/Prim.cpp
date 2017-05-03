@@ -20,6 +20,10 @@ void Prim::execute()	//Posprz¹taæ!
 
 	vector <Edge> *tree = new vector<Edge>;	//Drzewo rozpinaj¹ce
 
+	//Dalsza czêœæ algorytmu, dokoñczyæ
+
+
+
 	cout << "Prim executed" << endl;
 
 
