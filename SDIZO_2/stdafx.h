@@ -29,6 +29,7 @@
 #include "BellmanFord.h"
 #include "Prim.h"
 #include "Kruskal.h"
+#include "Neighbour.h"
 
 using namespace std;
 

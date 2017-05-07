@@ -41,7 +41,8 @@ void mstMenu()	//Menu minimalnego drzewa rozpinaj¹cego, wybór miêdzy algorytmem 
 			graph->printMatrix();
 			break;
 		case 'l':
-
+			cout << "Reprezentacja listowa: " << endl;
+			graph->printList();
 			break;
 		case 'c':
 			system("cls");
@@ -93,7 +94,8 @@ void pathMenu()	//Menu minimalnej œcie¿ki, wybór miêdzy algorytmem Dijkstry i Be
 			graph->printMatrix();
 			break;
 		case 'l':
-
+			cout << "Reprezentacja listowa: " << endl;
+			graph->printList();
 			break;
 		case 'c':
 			system("cls");
@@ -149,8 +151,6 @@ void mainMenu()	//Menu g³ówne, wybór problemu do rozwi¹zania
 	cout << "Wybor problemu:" << endl
 		<< "1 - MST, minimalne drzewo rozpinajace " << endl
 		<< "2 - Poszukiwanie najkrotszej sciezki" << endl
-		<< "m - reprezentacja macierzowa grafu" << endl
-		<< "l - reprezentacja listowa grafu" << endl
 		<< "c - czysci ekran" << endl;
 	int isDirected;
 	char decision;
@@ -160,9 +160,9 @@ void mainMenu()	//Menu g³ówne, wybór problemu do rozwi¹zania
 		decision = _getch();
 		switch (decision)
 		{
-		case '1':
+		case '1': //Naprawiæ
 			isDirected = false;
-			if (prepareGraph(isDirected)) //Dla problemu MST krawêdzie s¹ kierowane jako nieskierowane, przekazujê false 
+			if (prepareGraph(isDirected)) //Dla problemu MST krawêdzie s¹ traktowane jako nieskierowane, przekazujê false 
 			{
 				mstMenu();
 			}
@@ -213,9 +213,9 @@ void mainMenu()	//Menu g³ówne, wybór problemu do rozwi¹zania
 TODO 
 +Uzupe³niæ klasê grafu
 +Uzupe³niæ metody execute, wyœwietlanie wyniku operacji zawrzeæ w nich.
-+Dodaæ graph jako argument konstruktorach algorytmów.
 +Dodaæ reprezentacje macierzowe i listowe grafu. Wiêcej w schemacie UML.
 +Dodaæ odczyt grafu z pliku.
++Neighbour, przeci¹¿aæ operatory
 +Uzupe³niæ metody wyœwietlaj¹ce Postaæ macierzow¹ i listow¹ grafu
 */
 

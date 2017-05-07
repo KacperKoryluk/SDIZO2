@@ -20,6 +20,7 @@ void Prim::execute()	//Posprz¹taæ!
 
 	vector <Edge> *tree = new vector<Edge>;	//Drzewo rozpinaj¹ce
 
+	//Dodaæ kolejkê priorytetow¹ wierzcho³ków
 	//Dalsza czêœæ algorytmu, dokoñczyæ
 
 
@@ -28,6 +29,8 @@ void Prim::execute()	//Posprz¹taæ!
 
 
 
+	delete[] visited;
+	delete tree;
 
 }
 

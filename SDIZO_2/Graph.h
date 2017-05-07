@@ -13,6 +13,9 @@ private:
 	int lastVertex;
 	int **_graphMatrix;
 	//Dodaæ reprezentacjê listow¹ grafu
+	std::vector<std::list<class Neighbour*>> _graphList;
+	 
+	
 public:
 
 	int getEdgeAmount();

@@ -29,7 +29,7 @@ int Graph::getWeight(int vertex1, int vertex2)
 
 bool Graph::loadFromFile(string fileName, bool isDirected)
 {
-	
+	//Macierz------------------------------------------------------------------------------------------------------------
 	fstream file;
 	file.open(fileName, ios::in);
 	if (file.is_open())
@@ -53,6 +53,7 @@ bool Graph::loadFromFile(string fileName, bool isDirected)
 			for (int j = 0; j < verticeAmount; j++)
 			{
 				_graphMatrix[i][j] = 0;	//Wype³niam macierz zerami
+				//Zmieniæ na int max lub int min
 			}
 		}
 
@@ -73,7 +74,7 @@ bool Graph::loadFromFile(string fileName, bool isDirected)
 			
 			_graphMatrix[tempVertex1][tempVertex2] = weight;
 			
-			if (isDirected)
+			if (!isDirected)
 			{
 				_graphMatrix[tempVertex2][tempVertex1] = weight;
 			}
@@ -81,11 +82,51 @@ bool Graph::loadFromFile(string fileName, bool isDirected)
 			tempVertex1 = 0; tempVertex2 = 0; weight = 0;
 		}
 
-		
-
-
-
 		file.close();
+		//Lista----------------------------------------------------------------------------------------------------
+		file.open(fileName, ios::in);
+
+		int edge[3]; //Informacje o krawêdzi do pêtli edge[0] - wierzcho³ek pocz¹tkowy, edge[1] - koñcowy, edge[2] - waga
+		Neighbour *tempNeighbour; //Tymczasowy wierzcho³ek s¹siaduj¹cy umieszczany na liœcie
+
+		if (file.is_open())
+		{
+			if (file.fail())
+			{
+				return false;
+			}
+			file >> edgeAmount;
+			file >> verticeAmount;
+			file >> firstVertex;
+			file >> lastVertex;
+			
+			_graphList.resize(verticeAmount);
+
+			for (int i = -1; i < verticeAmount+1; i++)
+			{
+				for (int j = 0; j < 3; j++)
+				{
+					file >> edge[j];
+				}
+		
+				tempNeighbour = new Neighbour(edge[2], edge[1]);
+				_graphList[edge[0]].push_front(tempNeighbour);
+			//	delete tempNeighbour;
+				if (!isDirected)
+				{
+					tempNeighbour = new Neighbour(edge[2], edge[0]);
+					_graphList[edge[1]].push_front(tempNeighbour);
+					//delete tempNeighbour;
+				}
+
+			}
+
+			 
+			file.close();
+		}
+
+
+
 		return true;
 	}
 	else
@@ -98,13 +139,44 @@ bool Graph::loadFromFile(string fileName, bool isDirected)
 
 void Graph::printMatrix()
 {
+	cout << "  ";
 	for (int i = 0; i < verticeAmount; i++)
 	{
+		cout << " | " << i;
+	}
+	cout << " | " << endl;
+	for (int i = 0; i < verticeAmount; i++)
+	{
+		cout << i << "|";
 		for (int j = 0; j < verticeAmount; j++)
 		{
-			cout << " : " << _graphMatrix[i][j];
+			if (_graphMatrix[i][j])
+			{
+				cout << " : " << _graphMatrix[i][j];
+			}
+			else cout << " : " << "-";
 		}
 		cout <<" : " << endl;
+	}
+}
+
+void Graph::printList()
+{
+	
+	cout << " Wierzcholek:" << " S - Sasiad W - Waga." << endl;
+	typename list<Neighbour*>::const_iterator j;
+	for (int i = 0; i < verticeAmount; i++)
+	{
+		cout << i << ": ";
+		list<Neighbour*>::iterator j;
+		
+		for (j = _graphList[i].begin(); j != _graphList[i].end();)
+		{
+			
+			cout << *j << " || ";
+			++j;
+		}
+		cout << endl;
 	}
 }
 
