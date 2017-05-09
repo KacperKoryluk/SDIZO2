@@ -211,12 +211,8 @@ void mainMenu()	//Menu g³ówne, wybór problemu do rozwi¹zania
 
 /*
 TODO 
-+Uzupe³niæ klasê grafu
-+Uzupe³niæ metody execute, wyœwietlanie wyniku operacji zawrzeæ w nich.
-+Dodaæ reprezentacje macierzowe i listowe grafu. Wiêcej w schemacie UML.
-+Dodaæ odczyt grafu z pliku.
-+Neighbour, przeci¹¿aæ operatory
-+Uzupe³niæ metody wyœwietlaj¹ce Postaæ macierzow¹ i listow¹ grafu
++Uzupe³niæ metody execute, wyœwietlanie wyniku operacji zawrzeæ w nich. Operacje dla reprezentacji listowej i macierzowej w jednej metodzie.
++Uzupe³niæ destruktor grafu o usuwanie wektora list
 */
 
 int main()

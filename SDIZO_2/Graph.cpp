@@ -102,7 +102,7 @@ bool Graph::loadFromFile(string fileName, bool isDirected)
 			
 			_graphList.resize(verticeAmount);
 
-			for (int i = -1; i < verticeAmount+1; i++)
+			for (int i = 0; i < edgeAmount; i++)
 			{
 				for (int j = 0; j < 3; j++)
 				{
