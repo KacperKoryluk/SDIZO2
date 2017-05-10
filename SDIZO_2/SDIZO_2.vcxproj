@@ -148,6 +148,7 @@
     <ClInclude Include="Algorithm.h" />
     <ClInclude Include="BellmanFord.h" />
     <ClInclude Include="Dijkstra.h" />
+    <ClInclude Include="Edge.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="Kruskal.h" />
     <ClInclude Include="Neighbour.h" />
@@ -159,6 +160,7 @@
     <ClCompile Include="Algorithm.cpp" />
     <ClCompile Include="BellmanFord.cpp" />
     <ClCompile Include="Dijkstra.cpp" />
+    <ClCompile Include="Edge.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Kruskal.cpp" />
     <ClCompile Include="Neighbour.cpp" />

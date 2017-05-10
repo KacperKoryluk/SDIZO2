@@ -4,10 +4,7 @@
 
 void Prim::execute()	//Posprz¹taæ!
 {
-	struct Edge	//KrawêdŸ
-	{
-		int vertice1, vertice2, weight;
-	};
+	
 	
 	//Tu wstawiæ priority queue z uporz¹dkowanymi malej¹co wagami.
 
@@ -17,7 +14,7 @@ void Prim::execute()	//Posprz¹taæ!
 		visited[i] = false;	//Przed rozpoczêciem algorytmu nie odwiedzi³em ¿adnego wierzcho³ka, ustawiam na false
 	}
 
-
+	
 	vector <Edge> *tree = new vector<Edge>;	//Drzewo rozpinaj¹ce
 
 	//Dodaæ kolejkê priorytetow¹ wierzcho³ków
