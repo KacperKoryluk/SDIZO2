@@ -2,6 +2,11 @@
 #include "Graph.h"
 
 
+int ** Graph::getGraphMatrix()
+{
+	return _graphMatrix;
+}
+
 int Graph::getEdgeAmount()
 {
 	return edgeAmount;

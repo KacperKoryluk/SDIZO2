@@ -42,7 +42,7 @@ void Neighbour::print()
 
 bool Neighbour::operator==(const Neighbour & right)
 {
-	if (end = right.end)
+	if (end == right.end)
 	{
 		return true;
 	}

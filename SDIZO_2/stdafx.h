@@ -17,12 +17,14 @@
 #include <string>
 #include <string.h>
 #include <cstddef>
+#include <fstream>
+
 
 #include <list>
 #include <queue>
 #include <vector>
 
-#include <fstream>
+
 #include "Graph.h"
 #include "Algorithm.h"
 #include "Dijkstra.h"
@@ -30,6 +32,7 @@
 #include "Prim.h"
 #include "Kruskal.h"
 #include "Neighbour.h"
+#include "Edge.h"
 
 using namespace std;
 

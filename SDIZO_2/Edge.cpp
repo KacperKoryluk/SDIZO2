@@ -28,6 +28,32 @@ Edge::Edge(int startVertice, int endVertice, int weight)
 	this->weight = weight;
 }
 
+bool Edge::operator< (const Edge & right)
+{
+	return weight > right.weight;
+}
+
+bool Edge::operator> (const Edge & right)
+{
+	return weight < right.weight;
+}
+
+bool Edge::operator==(const Edge & right)
+{
+	if ((endVertice == right.endVertice) && (startVertice == right.startVertice))
+	{
+		return true;
+	}
+	return false;
+}
+
+std::ostream& operator<< (std::ostream &out, const Edge *n)
+{
+
+
+	out << "S: [" << n->startVertice <<"] E: [" <<n->endVertice << "] W: [" << n->weight << "]";
+	return out;
+}
 
 Edge::~Edge()
 {

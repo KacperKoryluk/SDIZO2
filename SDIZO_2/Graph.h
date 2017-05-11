@@ -14,10 +14,11 @@ private:
 	int **_graphMatrix;
 	//Dodaæ reprezentacjê listow¹ grafu
 	std::vector<std::list<class Neighbour*>> _graphList;
+	
 	 
 	
 public:
-
+	int** getGraphMatrix();
 	int getEdgeAmount();
 	int getVerticeAmount();
 	int getFirstVertex();
@@ -36,8 +37,3 @@ public:
 };
 
 
-//Rzeczy które nie dzia³aj¹, ale kiedyœ bêd¹ musia³y
-/*
-list<Element> _graphList;
-
-*/
