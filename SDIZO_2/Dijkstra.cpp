@@ -62,6 +62,7 @@ void Dijkstra::execute()
 
 		}
 	}
+	cout << "Listowo: " << endl;
 	for (int i = 0; i < _graph->getVerticeAmount(); i++)
 	{
 		cout << "Wierzcholek: " << i << " Odleglosc: " << distance[i] << " Droga: " << endl;
@@ -75,6 +76,47 @@ void Dijkstra::execute()
 	
 
 	//Macierzowa---------------------------------------------------------------------------------------------------------------------------------
+	for (int i = 0; i < _graph->getVerticeAmount(); i++)	//przywracam tablice do stanu pocz¹tkowego
+	{
+		previous[i] = -1;
+		distance[i] = INF;
+	}
+	distance[startingVertex] = 0;
+	previous[startingVertex] = startingVertex;
+	queue.push(make_pair(0, startingVertex));
+
+	while (!queue.empty())
+	{
+		int u = queue.top().second; //Wybieram wierzcho³ek z kolejki o najmniejszej wadze
+		queue.pop();
+		
+		for (int i = 0; i < _graph->getVerticeAmount(); i++)
+		{
+			int v = i;
+			int weight = tempMatrix[u][i];
+
+			if (distance[v] > distance[u] + weight && distance[u] + weight > 0)	//Dodatkowy warunek, distance[u]+weight > 0, ¿eby wyeliminowaæ sytuacjê, gdzie MAX_INT po zwiêkszeniu staje siê liczb¹ ujemn¹ i psuje algorytm
+			{
+				distance[v] = distance[u] + weight;
+				queue.push(make_pair(distance[v], v));
+				previous[v] = u;
+			}
+		}
+	}
+
+	cout << "Macierzowo: " << endl;
+	for (int i = 0; i < _graph->getVerticeAmount(); i++)
+	{
+		cout << "Wierzcholek: " << i << " Odleglosc: " << distance[i] << " Droga: " << endl;
+	}
+
+	cout << "Tablica poprzednikow: " << endl;
+	for (int i = 0; i < _graph->getVerticeAmount(); i++)
+	{
+		cout << "Wierzcholek: " << i << " Poprzednik: " << previous[i] << endl;
+	}
+
+
 
 	cout << "Dijkstra executed" << endl;
 }
