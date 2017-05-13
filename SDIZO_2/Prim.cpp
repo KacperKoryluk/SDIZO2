@@ -29,7 +29,7 @@ void Prim::execute()	//Posprz¹taæ!
 
 	int startingVertex = 0; //wierzcho³ek startowy algorytmu, zawsze 0
 
-	for (int i = 0; i < _graph->getVerticeAmount(); i++)
+	for (int i = 0; i < _graph->getVerticeAmount(); i++)	//Przepisujê graf do listy par <int,int>. £atwiejsze sortowanie (domyœlnie po pierwszym elemencie - wadze.)
 	{
 		for (int j = 0; j < _graph->getVerticeAmount(); j++)
 		{
@@ -86,7 +86,7 @@ void Prim::execute()	//Posprz¹taæ!
 	}
 	int totalWeight = 0;
 
-	cout << "Zawarte krawedzie: " << endl;
+	cout << "Listowa. Zawarte krawedzie: " << endl;
 	for (int i = 1; i < _graph->getVerticeAmount(); ++i)
 	{
 	
@@ -98,11 +98,52 @@ void Prim::execute()	//Posprz¹taæ!
 
 	
 
-	//Dodaæ kolejkê priorytetow¹ wierzcho³ków
-	//Dalsza czêœæ algorytmu, dokoñczyæ
+	//Macierzowa:
+	for (int i = 0; i < _graph->getVerticeAmount(); i++)	//Przywracam tablice do stanu pocz¹tkowego
+	{
+		visited[i] = false;
+	}
+	for (int i = 0; i < _graph->getVerticeAmount(); i++)
+	{
+		previous[i] = -1;
+	}
+	for (int i = 0; i < _graph->getVerticeAmount(); i++)
+	{
+		key[i] = INF;
+	}
+
+	queue.push(make_pair(0, startingVertex)); //Umieszczam pierwszy wierzcho³ek z wag¹ 0 w kolejce
+	key[startingVertex] = 0; //Waga dotarcia do pierwszego wierzcho³ka wynosi 0
+
+	
+	for (int i = 0; i < _graph->getVerticeAmount(); i++)
+	{
+		for (int j = 0; j < _graph->getVerticeAmount(); j++)
+		{
+			
+			int weight = tempMatrix[i][j];
+			int v = j;
+
+			if (visited[v] == false && key[v] > weight)
+			{
+				key[v] = weight;
+				queue.push(make_pair(key[v], v));
+				previous[v] = i;
+			}
+		}
+	}
 
 
 
+	cout << "Macierzowa. Zawarte krawedzie: " << endl;
+	for (int i = 1; i < _graph->getVerticeAmount(); ++i)
+	{
+
+		totalWeight += key[i];
+		cout << previous[i] << "--" << i << " Waga krawedzi: " << tempMatrix[i][previous[i]] << endl;
+
+	}
+	cout << "Waga calkowita: " << totalWeight << endl;
 	cout << "Prim executed" << endl;
 
 
