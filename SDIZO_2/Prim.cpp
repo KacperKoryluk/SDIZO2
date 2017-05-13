@@ -16,7 +16,7 @@ void Prim::execute()	//Posprz¹taæ!
 	typedef pair<int, int> neighbour; //Definujê parê integerów jako s¹siada (³atwiejsza implementacja, pierwszy int to waga, drugi to wierzcho³ek, domyœlnie porównywany jest wed³ug pierwszego w kolejce priorytetowej)
 
 	
-	//Listowa
+	//Listowa---------------------------------------------------------------------------------------------------------------------------------
 	int **tempMatrix = _graph->getGraphMatrix();
 	vector <std::list<class Neighbour*>> *templist;
 	Edge *tempEdge;
@@ -98,7 +98,7 @@ void Prim::execute()	//Posprz¹taæ!
 
 	
 
-	//Macierzowa:
+	//Macierzowa:------------------------------------------------------------------------------------------------------------------------------------------
 	for (int i = 0; i < _graph->getVerticeAmount(); i++)	//Przywracam tablice do stanu pocz¹tkowego
 	{
 		visited[i] = false;
@@ -111,7 +111,7 @@ void Prim::execute()	//Posprz¹taæ!
 	{
 		key[i] = INF;
 	}
-
+	totalWeight = 0;
 	queue.push(make_pair(0, startingVertex)); //Umieszczam pierwszy wierzcho³ek z wag¹ 0 w kolejce
 	key[startingVertex] = 0; //Waga dotarcia do pierwszego wierzcho³ka wynosi 0
 
@@ -168,30 +168,3 @@ Prim::Prim(Graph * graph)
 }
 
 
-/*
-//Œmietnik
-
-for (int i = 0; i < _graph->getVerticeAmount(); i++)
-{
-
-
-for (int j = 0; j < _graph->getVerticeAmount(); j++)
-{
-
-
-
-int v = j;
-int weight = _graph->getGraphMatrix()[i][j];
-
-if (visited[v] == false && key[v] > weight)
-{
-key[v] = weight;
-queue.push(make_pair(key[v], v));
-previous[v] = u;
-
-}
-}
-}
-
-
-*/
