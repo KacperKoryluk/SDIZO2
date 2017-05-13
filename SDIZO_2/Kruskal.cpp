@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "Kruskal.h"
 
-int findPrevious(int u, int *previous)	//Funkcja rekurencyjnie wyszukuj¹ca poprzednika
+int findPrevious(int u, int *previous)	//Funkcja rekurencyjnie wyszukuj¹ca poprzednika, jako argumenty otrzymuje wierzcho³ek i tablicê wierzcho³ków, w której ma szukaæ poprzednika
 {
-	if (u != previous[u])
+	if (u != previous[u])	//Jeœli wierzcho³ek nie jest pocz¹tkowym danego poddrzewa
 	{
 		previous[u] = findPrevious(previous[u], previous);
 	}
@@ -11,37 +11,42 @@ int findPrevious(int u, int *previous)	//Funkcja rekurencyjnie wyszukuj¹ca poprz
 	return previous[u];
 }
 
+
 void Kruskal::execute()
 {
 
-	//Tablicowa(u¿ywaj¹c wektorów)-------------------------------------------------------------------------------------------------------------------------
+	//Macierzowa(u¿ywaj¹c wektorów)-------------------------------------------------------------------------------------------------------------------------
 	int MSTWeight = 0; //waga
 	int **tempMatrix = _graph->getGraphMatrix();
 
-	typedef pair<int, int> neighbour;	//Para integerów, podobnie jak w algorytmie prima, ³atwiejsze sortowanie
-	vector <pair<int, neighbour>> edges; //wektor par int i para integerów, reprezentuje krawêdzie <waga <wierzcho³ek u,wierzcho³ek v>>
 
-	for (int i = 0; i < _graph->getVerticeAmount(); i++)	//Przepisujê graf do listy par <<int> <int,int>>. £atwiejsze sortowanie (domyœlnie po pierwszym elemencie - wadze.)
-	{
+	cout << "Listowa. Zawarte krawêdzie:" << endl;
+	typedef pair<int, int> neighbour;	//Para integerów, podobnie jak w algorytmie prima, ³atwiejsze sortowanie
+	list <pair<int, neighbour>> edges; //Lista par int i para integerów, reprezentuje krawêdzie <waga <wierzcho³ek u,wierzcho³ek v>>
+
+	for (int i = 0; i < _graph->getVerticeAmount(); i++)	//Przepisujê graf do lokalnej listy par <<int> <int,int>>. £atwiejsze sortowanie (domyœlnie po pierwszym elemencie pary - wadze.)
+	{														//To nie jest czêœæ algorytmu
 		for (int j = 0; j < _graph->getVerticeAmount(); j++)
 		{
 			edges.push_back({ tempMatrix[i][j], {i,j} });
 		}
 	}
 
-	sort(edges.begin(), edges.end()); //Sortuje krawêdzie niemalej¹co wed³ug wagi
 
-	int *rank = new int[_graph->getVerticeAmount()+1];
-	int *previous = new int[_graph->getVerticeAmount() + 1];;
+	edges.sort();	//Sortuje krawêdzie wed³ug wagi, rosn¹co
+	
+
+	int *rank = new int[_graph->getVerticeAmount()+1];	//Tablica rang
+	int *previous = new int[_graph->getVerticeAmount() + 1]; //Tablica poprzedników
 
 	for (int i = 0; i <= _graph->getVerticeAmount(); i++)
 	{
 		rank[i] = 0; //Pocz¹tkowo wszystkie wierzcho³ki maj¹ rangê 0 i s¹ w osobnych drzewach
 
-		previous[i] = i; //Ka¿dy element jest swoim poprzednikiem
+		previous[i] = i; //Ka¿dy element pocz¹tkowych jednoelementowych poddrzew jest swoim poprzednikiem
 	}
 
-	vector <pair<int, neighbour>>::iterator i;
+	list <pair<int, neighbour>>::iterator i;
 
 	for (i = edges.begin(); i != edges.end(); i++)
 	{
@@ -59,22 +64,22 @@ void Kruskal::execute()
 			MSTWeight += i->first; //Zwiêkszam wagê ca³kowit¹ drzewa
 
 
-			//Zestaw kroków maj¹cy na celu ³¹czenie poddrzew wed³ug rangi zawartej w tablicy rank
+			//Zestaw kroków maj¹cy na celu ³¹czenie poddrzew wed³ug rangi zawartej w tablicy rang
 			setU = findPrevious(setU, previous);
 			setV = findPrevious(setV, previous);
 
 			if (rank[setU] > rank[setV])
 			{
-				previous[setV] = setU;
+				previous[setV] = setU;	//Jeœli ranga setU jest wiêksza od rangi setV, setU staje siê poprzednikiem setV
 			}
 			else if (rank[setU] <= rank[setV])
 			{
-				previous[setU] = setV;
+				previous[setU] = setV;	
 			}
 
 			if (rank[setU] == rank[setV])
 			{
-				rank[setV]++;
+				rank[setV]++;	//Jeœli rangi s¹ równe inkrementujê rangê setV
 			}
 		}
 
@@ -82,11 +87,68 @@ void Kruskal::execute()
 	
 
 
-	cout << "Waga ca³kowita: " << MSTWeight << endl;
+	cout << "Waga calkowita: " << MSTWeight << endl;
+
+	
+
+	//Macierzowa-------------------------------------------------------------------------------------------------------------------------------------------
+	//NIE DZIA£A JAK POWINNO, BRAK SORTOWANIA, NAPRAWIÆ
+
+	cout << "Macierzowa. Zawarte krawêdzie:" << endl;
+	for (int i = 0; i <= _graph->getVerticeAmount(); i++)	//Przywracam tablice rang i poprzedników do stanu pocz¹tkowego
+	{
+		rank[i] = 0; 
+
+		previous[i] = i; 
+	}
+
+	MSTWeight = 0;
+
+	for (int i = 0; i < _graph->getVerticeAmount(); i++)
+	{
+		for (int j = 0; j < _graph->getVerticeAmount(); j++)
+		{
+			int u = i;
+			int v = j;
+
+			int setU = findPrevious(u, previous);
+			int setV = findPrevious(v, previous);
+
+
+
+			if (setU != setV)	//Sprawdzam czy nie tworzy cyklu(u i v nie mog¹ nale¿eæ do tego samego setu)
+			{
+				cout << u << " -- " << v << " Waga: " << tempMatrix[u][v] << endl;
+
+
+				MSTWeight += tempMatrix[i][j];
+
+
+									   //Zestaw kroków maj¹cy na celu ³¹czenie poddrzew wed³ug rangi zawartej w tablicy rang
+				setU = findPrevious(setU, previous);
+				setV = findPrevious(setV, previous);
+
+				if (rank[setU] > rank[setV])
+				{
+					previous[setV] = setU;	//Jeœli ranga setU jest wiêksza od rangi setV, setU staje siê poprzednikiem setV
+				}
+				else if (rank[setU] <= rank[setV])
+				{
+					previous[setU] = setV;
+				}
+
+				if (rank[setU] == rank[setV])
+				{
+					rank[setV]++;	//Jeœli rangi s¹ równe inkrementujê rangê setV
+				}
+			}
+		}
+	}
+
+	cout << "Waga calkowita: " << MSTWeight << endl;
+
 
 	cout << "Kruskal executed" << endl;
-
-	//Listowa-------------------------------------------------------------------------------------------------------------------------------------------
 }
 
 Kruskal::Kruskal()
