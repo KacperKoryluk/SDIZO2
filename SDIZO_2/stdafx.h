@@ -23,6 +23,10 @@
 #include <list>
 #include <queue>
 #include <vector>
+#include <functional>
+#include <climits>
+
+
 
 
 #include "Graph.h"

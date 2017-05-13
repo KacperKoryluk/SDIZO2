@@ -24,6 +24,7 @@ public:
 	int getFirstVertex();
 	int getLastVertex();
 	int getWeight(int vertex1, int vertex2);
+	std::vector<std::list<class Neighbour*>> getList();
 	
 	bool loadFromFile(std::string fileName, bool isDirected);
 	void printMatrix();

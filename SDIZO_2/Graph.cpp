@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Graph.h"
-
+#define INF INT_MAX
 
 int ** Graph::getGraphMatrix()
 {
@@ -32,6 +32,11 @@ int Graph::getWeight(int vertex1, int vertex2)
 	return _graphMatrix[vertex1][vertex2];
 }
 
+std::vector<std::list<class Neighbour*>> Graph::getList()
+{
+	return _graphList;
+}
+
 bool Graph::loadFromFile(string fileName, bool isDirected)
 {
 	//Macierz------------------------------------------------------------------------------------------------------------
@@ -57,7 +62,7 @@ bool Graph::loadFromFile(string fileName, bool isDirected)
 		{
 			for (int j = 0; j < verticeAmount; j++)
 			{
-				_graphMatrix[i][j] = 0;	//Wype³niam macierz zerami
+				_graphMatrix[i][j] = INF;	//Wype³niam macierz umown¹ nieskoñczonoœci¹
 				//Zmieniæ na int max lub int min
 			}
 		}
@@ -155,7 +160,7 @@ void Graph::printMatrix()
 		cout << i << "|";
 		for (int j = 0; j < verticeAmount; j++)
 		{
-			if (_graphMatrix[i][j])
+			if (_graphMatrix[i][j]!=INF)
 			{
 				cout << " : " << _graphMatrix[i][j];
 			}
