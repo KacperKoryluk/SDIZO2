@@ -65,7 +65,7 @@ void Dijkstra::execute()
 	cout << "Listowo: " << endl;
 	for (int i = 0; i < _graph->getVerticeAmount(); i++)
 	{
-		cout << "Wierzcholek: " << i << " Odleglosc: " << distance[i] << " Droga: " << endl;
+		cout << "Wierzcholek: " << i << " Odleglosc: " << distance[i] << endl;
 	}
 	
 	cout << "Tablica poprzednikow: " << endl;
@@ -107,7 +107,7 @@ void Dijkstra::execute()
 	cout << "Macierzowo: " << endl;
 	for (int i = 0; i < _graph->getVerticeAmount(); i++)
 	{
-		cout << "Wierzcholek: " << i << " Odleglosc: " << distance[i] << " Droga: " << endl;
+		cout << "Wierzcholek: " << i << " Odleglosc: " << distance[i] << endl;
 	}
 
 	cout << "Tablica poprzednikow: " << endl;
