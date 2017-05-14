@@ -117,7 +117,8 @@ void Dijkstra::execute()
 	}
 
 
-
+	delete[] adjacencyList;
+	delete[] previous;
 	cout << "Dijkstra executed" << endl;
 }
 

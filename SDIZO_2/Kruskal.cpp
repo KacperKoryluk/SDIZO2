@@ -147,6 +147,8 @@ void Kruskal::execute()
 
 	cout << "Waga calkowita: " << MSTWeight << endl;
 
+	delete[] rank;
+	delete[] previous;
 
 	cout << "Kruskal executed" << endl;
 }

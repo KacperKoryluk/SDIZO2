@@ -150,7 +150,7 @@ void Prim::execute()	//Posprz¹taæ!
 
 	
 	
-
+	delete[] adjacencyList;
 }
 
 Prim::Prim()
