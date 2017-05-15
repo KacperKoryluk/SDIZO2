@@ -95,7 +95,7 @@ void Dijkstra::execute()
 			int v = i;
 			int weight = tempMatrix[u][i];
 
-			if (distance[v] > distance[u] + weight && distance[u] + weight > 0)	//Dodatkowy warunek, distance[u]+weight > 0, ¿eby wyeliminowaæ sytuacjê, gdzie MAX_INT po zwiêkszeniu staje siê liczb¹ ujemn¹ i psuje algorytm
+			if (distance[v] > distance[u] + weight && weight != INF)	//Dodatkowy warunek, distance[u]+weight > 0, ¿eby wyeliminowaæ sytuacjê, gdzie MAX_INT po zwiêkszeniu staje siê liczb¹ ujemn¹ i psuje algorytm
 			{
 				distance[v] = distance[u] + weight;
 				queue.push(make_pair(distance[v], v));

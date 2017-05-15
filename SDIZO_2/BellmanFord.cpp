@@ -15,13 +15,13 @@ void BellmanFord::execute()
 		previous[i] = -1;
 	}
 	distance[startVertex] = 0;
-	
+	previous[startVertex] = startVertex;
 
 	//Listowa:---------------------------------------------------------------------------------------------------
-	vector <list <pair<int, int>>> adjacencyList(_graph->getVerticeAmount()); //Lokalny wektor list <waga, wierzcho³ek koñcowy>
 	list<pair<int, pair<int, int>>> edges(_graph->getVerticeAmount()); //Lista krawêdzi, struktura <waga,<Ÿród³o,cel>>
-	list <pair<int, int>>::iterator it;
-	
+	list<pair<int, pair<int, int>>>::iterator it;
+	vector<pair<int, pair<int, int>>> edgesV(_graph->getVerticeAmount()); //Wektor krawêdzi
+	vector<pair<int, pair<int, int>>>::iterator itV;
 	bool test = true; //Czy wystapi³ ujemny cykl
 
 	for (int i = 0; i < _graph->getVerticeAmount(); i++)
@@ -32,8 +32,8 @@ void BellmanFord::execute()
 			
 			if (weight != INF)
 			{
-				adjacencyList[i].push_back(make_pair(weight, j));	//Wype³niam lokalny wektor list
 				edges.push_back(make_pair(tempMatrix[i][j], make_pair(i, j))); //Wype³niam listê krawêdzi
+				edgesV.push_back(make_pair(tempMatrix[i][j], make_pair(i, j))); //Wype³niam wektor krawêdzi
 			}
 
 		}
@@ -42,43 +42,37 @@ void BellmanFord::execute()
 
 
 	//Relaksacja wszystkich krawêdzi V-1 razy
-	
-	for (int i = 0; i < _graph->getVerticeAmount() - 1; i++) //Wykonujemy relaksacjê iloœæ wierzcho³ków - 1 razy
+	for (int i = 1; i < _graph->getVerticeAmount() - 1; i++)
 	{
-		for (int j = 0; j < _graph->getVerticeAmount(); j++)	//Do poprawy
+		for (it = edges.begin(); it != edges.end(); it++)
 		{
-			for (it = adjacencyList[j].begin(); it != adjacencyList[j].end(); it++)
-			{
-				if (distance[j] > (*it).first + distance[(*it).second] && (*it).first + distance[(*it).second] > 0)
-				{
+			int u = (*it).second.first;
+			int v = (*it).second.second;
+			int weight = (*it).first;
 
-					distance[j] = (*it).first + distance[(*it).second];
-					previous[j] = (*it).second;
-				}
+			if (distance[v] > distance[u] + weight && distance[u] != INF)
+			{
+				distance[v] = distance[u] + weight;
+				previous[v] = u;
 			}
 		}
-			
 	}
 	
-
-	for (int i = 0; i < _graph->getVerticeAmount() - 1; i++) //Wykonujemy relaksacjê iloœæ wierzcho³ków - 1 razy
+	for (int i = 1; i < _graph->getVerticeAmount() - 1; i++)
 	{
-		
-		for (int j = 0; j < _graph->getVerticeAmount(); j++)
+		for (it = edges.begin(); it != edges.end(); it++)
 		{
-			for (it = adjacencyList[j].begin(); it != adjacencyList[j].end(); it++)
-			{
-				if (distance[j] >(*it).first + distance[(*it).second] && (*it).first + distance[(*it).second] > 0)
-				{
+			int u = (*it).second.first;
+			int v = (*it).second.second;
+			int weight = (*it).first;
 
-					test = false;
-					cout << "Ujemny cykl. Blad!" << endl;
-				}
+			if (distance[v] > distance[u] + weight && distance[u] != INF)
+			{
+				test = false;
+				cout << "Wystapil ujemny cykl!" << endl;
 			}
 		}
-
 	}
-
 	if (test)
 	{
 		cout << "Listowo: " << endl;
@@ -86,10 +80,69 @@ void BellmanFord::execute()
 		{
 			cout << "Wierzcholek: " << i << " Odleglosc: " << distance[i] << endl;
 		}
+
+		cout << "Tablica poprzednikow: " << endl;
+		for (int i = 0; i < _graph->getVerticeAmount(); i++)
+		{
+			cout << "Wierzcholek: " << i << " Poprzednik: " << previous[i] << endl;
+		}
 	}
-	
+	//Macierzowo:------------------------------------------------------------------------------------------------------------------------------------------
+	test = true; //Przywracam zmienn¹ test, ¿eby metoda macierzowa te¿ siê wykona³a w razie wyst¹pienia ujemnego cyklu w metodzie listowej
+	for (int i = 0; i < _graph->getVerticeAmount(); i++)	//Przywracam tablicê odleg³oœci od Ÿród³a oraz poprzedników do stanu pocz¹tkowego
+	{
+		distance[i] = INF;
+		previous[i] = -1;
+	}
+	distance[startVertex] = 0;
+	previous[startVertex] = startVertex;
+	for (int i = 1; i < _graph->getVerticeAmount() - 1; i++)
+	{
+		for (itV = edgesV.begin(); itV != edgesV.end(); itV++)
+		{
+			int u = (*itV).second.first;
+			int v = (*itV).second.second;
+			int weight = (*itV).first;
+
+			if (distance[v] > distance[u] + weight && distance[u] != INF)
+			{
+				distance[v] = distance[u] + weight;
+				previous[v] = u;
+			}
+		}
+	}
 
 
+	for (int i = 1; i < _graph->getVerticeAmount() - 1; i++)
+	{
+		for (itV = edgesV.begin(); itV != edgesV.end(); itV++)
+		{
+			int u = (*itV).second.first;
+			int v = (*itV).second.second;
+			int weight = (*itV).first;
+
+			if (distance[v] > distance[u] + weight && distance[u] != INF)
+			{
+				test = false;
+				cout << "Wystapil ujemny cykl!" << endl;
+			}
+		}
+	}
+
+	if (test)
+	{
+		cout << "Macierzowo: " << endl;
+		for (int i = 0; i < _graph->getVerticeAmount(); i++)
+		{
+			cout << "Wierzcholek: " << i << " Odleglosc: " << distance[i] << endl;
+		}
+
+		cout << "Tablica poprzednikow: " << endl;
+		for (int i = 0; i < _graph->getVerticeAmount(); i++)
+		{
+			cout << "Wierzcholek: " << i << " Poprzednik: " << previous[i] << endl;
+		}
+	}
 
 	cout << "BellmanFord executed" << endl;
 }
