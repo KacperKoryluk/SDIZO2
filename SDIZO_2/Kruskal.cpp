@@ -104,45 +104,53 @@ void Kruskal::execute()
 
 	MSTWeight = 0;
 
-	for (int i = 0; i < _graph->getVerticeAmount(); i++)
-	{
+	vector <pair<int, neighbour>> edgesV; //Lista par int i para integerów, reprezentuje krawêdzie <waga <wierzcho³ek u,wierzcho³ek v>>
+
+	for (int i = 0; i < _graph->getVerticeAmount(); i++)	//Przepisujê graf do lokalnej listy par <<int> <int,int>>. £atwiejsze sortowanie (domyœlnie po pierwszym elemencie pary - wadze.)
+	{														//To nie jest czêœæ algorytmu
 		for (int j = 0; j < _graph->getVerticeAmount(); j++)
 		{
-			int u = i;
-			int v = j;
+			edgesV.push_back({ tempMatrix[i][j],{ i,j } });
+		}
+	}
 
-			int setU = findPrevious(u, previous);
-			int setV = findPrevious(v, previous);
+	sort(edgesV.begin(), edgesV.end());	//Sortowanie krawêdzi w wektorze =, biblioteka algorithm
+
+	for (int i = 0; i < _graph->getVerticeAmount(); i++)
+	{
+		int u = edgesV[i].second.first;	//Wybieram wierzcho³ki z pary neighbour <u,v>
+		int v = edgesV[i].second.second;
+
+		int setU = findPrevious(u, previous);
+		int setV = findPrevious(v, previous);
+
+		if (setU != setV)	//Sprawdzam czy nie tworzy cyklu(u i v nie mog¹ nale¿eæ do tego samego setu)
+		{
+			cout << u << " -- " << v << " Waga: " << tempMatrix[u][v] << endl;
 
 
+			MSTWeight += edgesV[i].first; //Zwiêkszam wagê ca³kowit¹ drzewa
 
-			if (setU != setV)	//Sprawdzam czy nie tworzy cyklu(u i v nie mog¹ nale¿eæ do tego samego setu)
+
+								   //Zestaw kroków maj¹cy na celu ³¹czenie poddrzew wed³ug rangi zawartej w tablicy rang
+			setU = findPrevious(setU, previous);
+			setV = findPrevious(setV, previous);
+
+			if (rank[setU] > rank[setV])
 			{
-				cout << u << " -- " << v << " Waga: " << tempMatrix[u][v] << endl;
+				previous[setV] = setU;	//Jeœli ranga setU jest wiêksza od rangi setV, setU staje siê poprzednikiem setV
+			}
+			else if (rank[setU] <= rank[setV])
+			{
+				previous[setU] = setV;
+			}
 
-
-				MSTWeight += tempMatrix[i][j];
-
-
-									   //Zestaw kroków maj¹cy na celu ³¹czenie poddrzew wed³ug rangi zawartej w tablicy rang
-				setU = findPrevious(setU, previous);
-				setV = findPrevious(setV, previous);
-
-				if (rank[setU] > rank[setV])
-				{
-					previous[setV] = setU;	//Jeœli ranga setU jest wiêksza od rangi setV, setU staje siê poprzednikiem setV
-				}
-				else if (rank[setU] <= rank[setV])
-				{
-					previous[setU] = setV;
-				}
-
-				if (rank[setU] == rank[setV])
-				{
-					rank[setV]++;	//Jeœli rangi s¹ równe inkrementujê rangê setV
-				}
+			if (rank[setU] == rank[setV])
+			{
+				rank[setV]++;	//Jeœli rangi s¹ równe inkrementujê rangê setV
 			}
 		}
+
 	}
 
 	cout << "Waga calkowita: " << MSTWeight << endl;
@@ -166,3 +174,48 @@ Kruskal::Kruskal(Graph * graph)
 {
 	_graph = graph;
 }
+
+
+/*
+Œmietnik
+for (int i = 0; i < _graph->getVerticeAmount(); i++)
+{
+for (int j = 0; j < _graph->getVerticeAmount(); j++)
+{
+int u = i;
+int v = j;
+
+int setU = findPrevious(u, previous);
+int setV = findPrevious(v, previous);
+
+
+
+if (setU != setV)	//Sprawdzam czy nie tworzy cyklu(u i v nie mog¹ nale¿eæ do tego samego setu)
+{
+cout << u << " -- " << v << " Waga: " << tempMatrix[u][v] << endl;
+
+
+MSTWeight += tempMatrix[i][j];
+
+
+//Zestaw kroków maj¹cy na celu ³¹czenie poddrzew wed³ug rangi zawartej w tablicy rang
+setU = findPrevious(setU, previous);
+setV = findPrevious(setV, previous);
+
+if (rank[setU] > rank[setV])
+{
+previous[setV] = setU;	//Jeœli ranga setU jest wiêksza od rangi setV, setU staje siê poprzednikiem setV
+}
+else if (rank[setU] <= rank[setV])
+{
+previous[setU] = setV;
+}
+
+if (rank[setU] == rank[setV])
+{
+rank[setV]++;	//Jeœli rangi s¹ równe inkrementujê rangê setV
+}
+}
+}
+}
+*/
