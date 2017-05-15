@@ -27,7 +27,7 @@ void Prim::execute()	//Posprz¹taæ!
 	adjacencyList = new list<neighbour>[_graph->getVerticeAmount()];
 	
 
-	int startingVertex = 0; //wierzcho³ek startowy algorytmu, zawsze 0
+	const int startingVertex = 0; //wierzcho³ek startowy algorytmu, zawsze 0
 
 	for (int i = 0; i < _graph->getVerticeAmount(); i++)	//Przepisujê graf do listy par <int,int>. £atwiejsze sortowanie (domyœlnie po pierwszym elemencie - wadze.)
 	{
@@ -80,8 +80,6 @@ void Prim::execute()	//Posprz¹taæ!
 		}
 		
 
-
-
 		
 	}
 	int totalWeight = 0;
@@ -102,38 +100,42 @@ void Prim::execute()	//Posprz¹taæ!
 	for (int i = 0; i < _graph->getVerticeAmount(); i++)	//Przywracam tablice do stanu pocz¹tkowego
 	{
 		visited[i] = false;
-	}
-	for (int i = 0; i < _graph->getVerticeAmount(); i++)
-	{
+		key[i] = INF;
 		previous[i] = -1;
 	}
-	for (int i = 0; i < _graph->getVerticeAmount(); i++)
-	{
-		key[i] = INF;
-	}
+	
 	totalWeight = 0;
 	queue.push(make_pair(0, startingVertex)); //Umieszczam pierwszy wierzcho³ek z wag¹ 0 w kolejce
 	key[startingVertex] = 0; //Waga dotarcia do pierwszego wierzcho³ka wynosi 0
-
+	visited[startingVertex] = true;
 	
-	for (int i = 0; i < _graph->getVerticeAmount(); i++)
+
+	queue.push(make_pair(0, startingVertex)); //Umieszczam pierwszy wierzcho³ek z wag¹ 0 w kolejce
+	key[startingVertex] = 0; //Waga dotarcia do pierwszego wierzcho³ka wynosi 0
+
+	while (!queue.empty())
 	{
-		for (int j = 0; j < _graph->getVerticeAmount(); j++)
+		int u = queue.top().second; //Druga liczba z pary - aktualny wierzcho³ek z góry kolejki
+		queue.pop();
+		visited[u] = true; //Wierzcho³ek odwiedzono
+
+		list<neighbour>::iterator i;
+		for (int i = 0; i < _graph->getVerticeAmount(); ++i)
 		{
-			
-			int weight = tempMatrix[i][j];
-			int v = j;
+			int v = i;
+			int weight = tempMatrix[u][v];
 
 			if (visited[v] == false && key[v] > weight)
 			{
 				key[v] = weight;
 				queue.push(make_pair(key[v], v));
-				previous[v] = i;
+				previous[v] = u;
 			}
 		}
+
+
+
 	}
-
-
 
 	cout << "Macierzowa. Zawarte krawedzie: " << endl;
 	for (int i = 1; i < _graph->getVerticeAmount(); ++i)
