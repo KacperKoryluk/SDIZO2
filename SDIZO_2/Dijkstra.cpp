@@ -59,7 +59,6 @@ void Dijkstra::execute()
 				queue.push(make_pair(distance[v], v));
 				previous[v] = u;
 			}
-
 		}
 	}
 	cout << "Listowo: " << endl;

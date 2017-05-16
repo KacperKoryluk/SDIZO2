@@ -149,7 +149,7 @@ bool Graph::loadFromFile(string fileName, bool isDirected)
 
 void Graph::printMatrix()
 {
-	cout << "  ";
+	/*cout << "  ";
 	for (int i = 0; i < verticeAmount; i++)
 	{
 		cout << " | " << i;
@@ -167,6 +167,26 @@ void Graph::printMatrix()
 			else cout << " : " << "-";
 		}
 		cout <<" : " << endl;
+	}*/
+
+	cout << setw(4) << "  ";
+	for (int i = 0; i < verticeAmount; i++)
+	{
+		cout << setw(3) << " | " << setw(3) << i;
+	}
+	cout << setw(3) << " | " << endl;
+	for (int i = 0; i < verticeAmount; i++)
+	{
+		cout << i << setw(3) << "|";
+		for (int j = 0; j < verticeAmount; j++)
+		{
+			if (_graphMatrix[i][j] != 0 && _graphMatrix[i][j] != INF)
+			{
+				cout << setw(3) << " : " << setw(3) << _graphMatrix[i][j];
+			}
+			else cout << setw(3) << " : " << setw(3) << "---";
+		}
+		cout << setw(3) << " : " << endl;
 	}
 }
 

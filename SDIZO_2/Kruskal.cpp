@@ -11,11 +11,11 @@ int findPrevious(int u, int *previous)	//Funkcja rekurencyjnie wyszukuj¹ca poprz
 	return previous[u];
 }
 
-
+bool compareVector(pair<int, pair<int, int>> a, pair<int, pair<int, int>> b) { return a.first < b.first; } //Do sortowania
 void Kruskal::execute()
 {
 
-	//Macierzowa(u¿ywaj¹c wektorów)-------------------------------------------------------------------------------------------------------------------------
+	//Listowa(u¿ywaj¹c wektorów)-------------------------------------------------------------------------------------------------------------------------
 	int MSTWeight = 0; //waga
 	int **tempMatrix = _graph->getGraphMatrix();
 
@@ -58,7 +58,7 @@ void Kruskal::execute()
 
 		if (setU != setV)	//Sprawdzam czy nie tworzy cyklu(u i v nie mog¹ nale¿eæ do tego samego setu)
 		{
-			cout << u << " -- " << v << " Waga: " << tempMatrix[u][v] << endl; 
+			cout << u << " -- " << v << " Waga: " << tempMatrix[u][v] << endl; //Operacja wyœwietlania jest nieistotna dla samego algorytmu, dlatego korzysta z macierzy do wyœwietlenia wagi
 
 
 			MSTWeight += i->first; //Zwiêkszam wagê ca³kowit¹ drzewa
@@ -113,10 +113,10 @@ void Kruskal::execute()
 			edgesV.push_back({ tempMatrix[i][j],{ i,j } });
 		}
 	}
+	
+	sort(edgesV.begin(), edgesV.end(), compareVector);	//Sortowanie krawêdzi w wektorze =, biblioteka algorithm, funkcja sortuj¹ca 14 linia tego pliku
 
-	sort(edgesV.begin(), edgesV.end());	//Sortowanie krawêdzi w wektorze =, biblioteka algorithm
-
-	for (int i = 0; i < _graph->getVerticeAmount(); i++)
+	for (int i = 0; i < _graph->getEdgeAmount(); i++)
 	{
 		int u = edgesV[i].second.first;	//Wybieram wierzcho³ki z pary neighbour <u,v>
 		int v = edgesV[i].second.second;

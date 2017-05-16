@@ -151,6 +151,7 @@
     <ClInclude Include="Dijkstra.h" />
     <ClInclude Include="Edge.h" />
     <ClInclude Include="Graph.h" />
+    <ClInclude Include="GraphGenerator.h" />
     <ClInclude Include="Kruskal.h" />
     <ClInclude Include="Neighbour.h" />
     <ClInclude Include="Prim.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="Dijkstra.cpp" />
     <ClCompile Include="Edge.cpp" />
     <ClCompile Include="Graph.cpp" />
+    <ClCompile Include="GraphGenerator.cpp" />
     <ClCompile Include="Kruskal.cpp" />
     <ClCompile Include="Neighbour.cpp" />
     <ClCompile Include="Prim.cpp" />

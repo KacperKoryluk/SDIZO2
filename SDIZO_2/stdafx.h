@@ -19,6 +19,8 @@
 #include <cstddef>
 #include <fstream>
 #include <algorithm>
+#include <ctime>
+#include <iomanip>
 
 
 #include <list>
@@ -38,6 +40,7 @@
 #include "Kruskal.h"
 #include "Neighbour.h"
 #include "Edge.h"
+#include "GraphGenerator.h"
 
 using namespace std;
 

@@ -6,7 +6,7 @@
 
 Algorithm * _currentAlgorithm;
 Graph * graph;
-
+GraphGenerator *gen;
 
 
 void mstMenu()	//Menu minimalnego drzewa rozpinaj¹cego, wybór miêdzy algorytmem Kruskala i Prima
@@ -148,12 +148,19 @@ bool prepareGraph(bool isDirected)	//Wywo³ywana w menu, ¿eby przygotowaæ graf za
 }
 void mainMenu()	//Menu g³ówne, wybór problemu do rozwi¹zania
 {
+
 	cout << "Wybor problemu:" << endl
 		<< "1 - MST, minimalne drzewo rozpinajace " << endl
 		<< "2 - Poszukiwanie najkrotszej sciezki" << endl
+		<< "g - generuj plik z grafem" << endl
 		<< "c - czysci ekran" << endl;
 	int isDirected;
 	char decision;
+	string fileName;
+	int verticeAmount, density, valueRange, start, endVertice;
+	bool isGeneratedGraphDirected;
+	char directedDecision;
+
 	do
 	{
 
@@ -184,8 +191,74 @@ void mainMenu()	//Menu g³ówne, wybór problemu do rozwi¹zania
 				cout << "Menu glowne: " << endl;
 			}
 			break;
-		case 'm':	
-		
+		case 'g':	
+			gen = new GraphGenerator();
+			cout << "Podaj ilosc wierzcholkow: ";
+			cin >> verticeAmount;
+			while (cin.fail() || verticeAmount <= 0)
+			{
+				cout << "Blad, podaj liczbe calkowita!" << endl;
+				cin.clear();
+				cin.ignore();
+				cin >> verticeAmount;
+			}
+			cout << "Podaj gestosc(sama liczba, na przyklad 25% to 25): ";
+			cin >> density;
+			while (cin.fail() || (density <=0 || density > 100))
+			{
+				cout << "Blad, podaj liczbe calkowita!" << endl;
+				cin.clear();
+				cin.ignore();
+				cin >> density;
+			}
+			cout << "Czy graf ma byc skierowany? [t/n]: ";
+			cin >> directedDecision;
+			switch(directedDecision)
+			{
+			case 't':
+				isGeneratedGraphDirected = true;
+				break;
+			case 'n':
+				isGeneratedGraphDirected = false;
+				break;
+			default:
+				cout << "Podano niewlasciwy znak, graf bedzie nieskierowany" << endl;
+				isGeneratedGraphDirected = false;
+				break;
+			}
+			/*
+			cout << "Podaj zakres wartosci: ";
+			cin >> valueRange;
+			while (cin.fail() || valueRange <= 0)
+			{
+				cout << "Blad, podaj liczbe calkowita!" << endl;
+				cin.clear();
+				cin.ignore();
+				cin >> valueRange;
+			}
+			cout << "Od ktorej wartosci losowac: ";
+			cin >> start;
+			while (cin.fail())
+			{
+				cout << "Blad, podaj liczbe calkowita!" << endl;
+				cin.clear();
+				cin.ignore();
+				cin >> start;
+			}
+			*/
+			cout << "Wierzcholek koncowy: ";
+			cin >> endVertice;
+			while (cin.fail() || endVertice < 0)
+			{
+				cout << "Blad, podaj liczbe calkowita!" << endl;
+				cin.clear();
+				cin.ignore();
+				cin >> endVertice;
+			}
+			cout << "Nazwa pliku (bez .txt): ";
+			cin >> fileName;
+			gen->generateGraph(verticeAmount, density, isGeneratedGraphDirected, 20, 1, fileName, endVertice);
+			delete gen;
 			break;
 		case 't':
 
@@ -195,8 +268,7 @@ void mainMenu()	//Menu g³ówne, wybór problemu do rozwi¹zania
 			cout << "Wybor problemu:" << endl
 				<< "1 - MST, minimalne drzewo rozpinajace " << endl
 				<< "2 - Poszukiwanie najkrotszej sciezki" << endl
-				<< "m - reprezentacja macierzowa grafu" << endl
-				<< "l - reprezentacja listowa grafu" << endl
+				<< "g - generuj plik z grafem" << endl
 				<< "c - czysci ekran" << endl;
 			break;
 		case 27:
