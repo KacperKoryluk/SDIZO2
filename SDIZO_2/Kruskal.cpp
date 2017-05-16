@@ -116,7 +116,7 @@ void Kruskal::execute()
 	
 	sort(edgesV.begin(), edgesV.end(), compareVector);	//Sortowanie krawêdzi w wektorze =, biblioteka algorithm, funkcja sortuj¹ca 14 linia tego pliku
 
-	for (int i = 0; i < _graph->getEdgeAmount(); i++)
+	for (int i = 0; i < edgesV.size(); i++)
 	{
 		int u = edgesV[i].second.first;	//Wybieram wierzcho³ki z pary neighbour <u,v>
 		int v = edgesV[i].second.second;
