@@ -92,7 +92,7 @@ void Kruskal::execute()
 	
 
 	//Macierzowa-------------------------------------------------------------------------------------------------------------------------------------------
-	//NIE DZIA£A JAK POWINNO, BRAK SORTOWANIA, NAPRAWIÆ
+	
 
 	cout << "Macierzowa. Zawarte krawêdzie:" << endl;
 	for (int i = 0; i <= _graph->getVerticeAmount(); i++)	//Przywracam tablice rang i poprzedników do stanu pocz¹tkowego
@@ -176,46 +176,3 @@ Kruskal::Kruskal(Graph * graph)
 }
 
 
-/*
-Œmietnik
-for (int i = 0; i < _graph->getVerticeAmount(); i++)
-{
-for (int j = 0; j < _graph->getVerticeAmount(); j++)
-{
-int u = i;
-int v = j;
-
-int setU = findPrevious(u, previous);
-int setV = findPrevious(v, previous);
-
-
-
-if (setU != setV)	//Sprawdzam czy nie tworzy cyklu(u i v nie mog¹ nale¿eæ do tego samego setu)
-{
-cout << u << " -- " << v << " Waga: " << tempMatrix[u][v] << endl;
-
-
-MSTWeight += tempMatrix[i][j];
-
-
-//Zestaw kroków maj¹cy na celu ³¹czenie poddrzew wed³ug rangi zawartej w tablicy rang
-setU = findPrevious(setU, previous);
-setV = findPrevious(setV, previous);
-
-if (rank[setU] > rank[setV])
-{
-previous[setV] = setU;	//Jeœli ranga setU jest wiêksza od rangi setV, setU staje siê poprzednikiem setV
-}
-else if (rank[setU] <= rank[setV])
-{
-previous[setU] = setV;
-}
-
-if (rank[setU] == rank[setV])
-{
-rank[setV]++;	//Jeœli rangi s¹ równe inkrementujê rangê setV
-}
-}
-}
-}
-*/

@@ -134,7 +134,7 @@ void GraphGenerator::generateGraph(int verticeAmount, float density, bool isDire
 			}
 			cout << setw(3) << " : " << endl;
 		}
-
+		
 }
 
 GraphGenerator::GraphGenerator()

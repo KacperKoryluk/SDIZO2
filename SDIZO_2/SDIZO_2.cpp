@@ -157,13 +157,13 @@ void mainMenu()	//Menu g³ówne, wybór problemu do rozwi¹zania
 	int isDirected;
 	char decision;
 	string fileName;
-	int verticeAmount, density, valueRange, start, endVertice;
+	int verticeAmount, density, endVertice;
 	bool isGeneratedGraphDirected;
 	char directedDecision;
 
 	do
 	{
-
+		
 		decision = _getch();
 		switch (decision)
 		{
@@ -193,6 +193,7 @@ void mainMenu()	//Menu g³ówne, wybór problemu do rozwi¹zania
 			break;
 		case 'g':	
 			gen = new GraphGenerator();
+
 			cout << "Podaj ilosc wierzcholkow: ";
 			cin >> verticeAmount;
 			while (cin.fail() || verticeAmount <= 0)
@@ -202,15 +203,23 @@ void mainMenu()	//Menu g³ówne, wybór problemu do rozwi¹zania
 				cin.ignore();
 				cin >> verticeAmount;
 			}
+
 			cout << "Podaj gestosc(sama liczba, na przyklad 25% to 25): ";
-			cin >> density;
-			while (cin.fail() || (density <=0 || density > 100))
+			do
 			{
-				cout << "Blad, podaj liczbe calkowita!" << endl;
-				cin.clear();
-				cin.ignore();
 				cin >> density;
-			}
+				while (cin.fail())
+				{
+					cout << "Blad, podaj liczbe calkowita!" << endl;
+					cin.clear();
+					cin.ignore();
+					cin >> density;
+				}
+				if (density <= 0 || density > 100)
+				{
+					cout << "Gestosc powinna byc wieksza od 0 i mniejsza od 100!" << endl;
+				}
+			} while (density <= 0 || density > 100);
 			cout << "Czy graf ma byc skierowany? [t/n]: ";
 			cin >> directedDecision;
 			switch(directedDecision)
@@ -247,17 +256,25 @@ void mainMenu()	//Menu g³ówne, wybór problemu do rozwi¹zania
 			}
 			*/
 			cout << "Wierzcholek koncowy: ";
-			cin >> endVertice;
-			while (cin.fail() || endVertice < 0)
+			do
 			{
-				cout << "Blad, podaj liczbe calkowita!" << endl;
-				cin.clear();
-				cin.ignore();
 				cin >> endVertice;
-			}
+				while (cin.fail())
+				{
+					cout << "Blad, podaj liczbe calkowita!" << endl;
+					cin.clear();
+					cin.ignore();
+					cin >> endVertice;
+				}
+				if (endVertice < 0 || endVertice > verticeAmount)
+				{
+					cout << "Wierzcholek koncowy powinien byc nieujemny i mniejszy od ilosci wierzcholkow w grafie!" << endl;
+				}
+			} while (endVertice < 0 || endVertice > verticeAmount);
+			
 			cout << "Nazwa pliku (bez .txt): ";
 			cin >> fileName;
-			gen->generateGraph(verticeAmount, density, isGeneratedGraphDirected, 20, 1, fileName, endVertice);
+			gen->generateGraph(verticeAmount, density, isGeneratedGraphDirected, 20, 5, fileName, endVertice);
 			delete gen;
 			break;
 		case 't':
@@ -290,6 +307,7 @@ TODO
 int main()
 {
 
+	
 
 	mainMenu();
 
@@ -299,3 +317,37 @@ int main()
     return 0;
 }
 
+
+/*
+generowanie plików z grafami
+
+temp->generateGraph(100, 99, true, 20, 1, "graf100skierowany99", 0);
+temp->generateGraph(100, 99, false, 20, 1, "graf100nieskierowany99", 0);
+
+temp->generateGraph(200, 25, true, 20, 1, "graf200skierowany25", 0);
+temp->generateGraph(200, 25, false, 20, 1, "graf200nieskierowany25", 0);
+temp->generateGraph(200, 50, true, 20, 1, "graf200skierowany50", 0);
+temp->generateGraph(200, 50, false, 20, 1, "graf200nieskierowany50", 0);
+temp->generateGraph(200, 75, true, 20, 1, "graf200skierowany75", 0);
+temp->generateGraph(200, 75, false, 20, 1, "graf200nieskierowany75", 0);
+temp->generateGraph(200, 99, true, 20, 1, "graf200skierowany99", 0);
+temp->generateGraph(200, 99, false, 20, 1, "graf200nieskierowany99", 0);
+
+temp->generateGraph(300, 25, true, 20, 1, "graf300skierowany25", 0);
+temp->generateGraph(300, 25, false, 20, 1, "graf300nieskierowany25", 0);
+temp->generateGraph(300, 50, true, 20, 1, "graf300skierowany50", 0);
+temp->generateGraph(300, 50, false, 20, 1, "graf300nieskierowany50", 0);
+temp->generateGraph(300, 75, true, 20, 1, "graf300skierowany75", 0);
+temp->generateGraph(300, 75, false, 20, 1, "graf300nieskierowany75", 0);
+temp->generateGraph(300, 99, true, 20, 1, "graf300skierowany99", 0);
+temp->generateGraph(300, 99, false, 20, 1, "graf300nieskierowany99", 0);
+
+temp->generateGraph(500, 25, true, 20, 1, "graf500skierowany25", 0);
+temp->generateGraph(500, 25, false, 20, 1, "graf500nieskierowany25", 0);
+temp->generateGraph(500, 50, true, 20, 1, "graf500skierowany50", 0);
+temp->generateGraph(500, 50, false, 20, 1, "graf500nieskierowany50", 0);
+temp->generateGraph(500, 75, true, 20, 1, "graf500skierowany75", 0);
+temp->generateGraph(500, 75, false, 20, 1, "graf500nieskierowany75", 0);
+temp->generateGraph(500, 99, true, 20, 1, "graf500skierowany99", 0);
+temp->generateGraph(500, 99, false, 20, 1, "graf500nieskierowany99", 0);
+*/
