@@ -18,9 +18,11 @@ void Kruskal::execute()
 	//Listowa(u¿ywaj¹c wektorów)-------------------------------------------------------------------------------------------------------------------------
 	int MSTWeight = 0; //waga
 	int **tempMatrix = _graph->getGraphMatrix();
+	string bufferList = ""; //Do buforów zapisujê wynik, ¿eby nie wyœwietlaæ ich podczas wykonywania algorytmu.
+	string bufferMatrix = "";
 
 
-	cout << "Listowa. Zawarte krawêdzie:" << endl;
+	cout << "Listowa. Zawarte krawedzie:" << endl;
 	typedef pair<int, int> neighbour;	//Para integerów, podobnie jak w algorytmie prima, ³atwiejsze sortowanie
 	list <pair<int, neighbour>> edges; //Lista par int i para integerów, reprezentuje krawêdzie <waga <wierzcho³ek u,wierzcho³ek v>>
 
@@ -58,7 +60,15 @@ void Kruskal::execute()
 
 		if (setU != setV)	//Sprawdzam czy nie tworzy cyklu(u i v nie mog¹ nale¿eæ do tego samego setu)
 		{
-			cout << u << " -- " << v << " Waga: " << tempMatrix[u][v] << endl; //Operacja wyœwietlania jest nieistotna dla samego algorytmu, dlatego korzysta z macierzy do wyœwietlenia wagi
+			 
+			bufferList.append(to_string(u));
+			bufferList.append(" -- ");
+			bufferList.append(to_string(v));
+			bufferList.append(" Waga: ");
+			bufferList.append(to_string(tempMatrix[u][v]));
+			bufferList.append("\n");
+
+		//	cout << u << " -- " << v << " Waga: " << tempMatrix[u][v] << endl; //Operacja wyœwietlania jest nieistotna dla samego algorytmu, dlatego korzysta z macierzy do wyœwietlenia wagi
 
 
 			MSTWeight += i->first; //Zwiêkszam wagê ca³kowit¹ drzewa
@@ -86,7 +96,7 @@ void Kruskal::execute()
 	}
 	
 
-
+	cout << bufferList;
 	cout << "Waga calkowita: " << MSTWeight << endl;
 
 	
@@ -94,7 +104,7 @@ void Kruskal::execute()
 	//Macierzowa-------------------------------------------------------------------------------------------------------------------------------------------
 	
 
-	cout << "Macierzowa. Zawarte krawêdzie:" << endl;
+	cout << "Macierzowa. Zawarte krawedzie:" << endl;
 	for (int i = 0; i <= _graph->getVerticeAmount(); i++)	//Przywracam tablice rang i poprzedników do stanu pocz¹tkowego
 	{
 		rank[i] = 0; 
@@ -125,8 +135,16 @@ void Kruskal::execute()
 		int setV = findPrevious(v, previous);
 
 		if (setU != setV)	//Sprawdzam czy nie tworzy cyklu(u i v nie mog¹ nale¿eæ do tego samego setu)
+
+		
 		{
-			cout << u << " -- " << v << " Waga: " << tempMatrix[u][v] << endl;
+			bufferMatrix.append(to_string(u));
+			bufferMatrix.append(" -- ");
+			bufferMatrix.append(to_string(v));
+			bufferMatrix.append(" Waga: ");
+			bufferMatrix.append(to_string(tempMatrix[u][v]));
+			bufferMatrix.append("\n");
+		//	cout << u << " -- " << v << " Waga: " << tempMatrix[u][v] << endl;
 
 
 			MSTWeight += edgesV[i].first; //Zwiêkszam wagê ca³kowit¹ drzewa
@@ -152,7 +170,7 @@ void Kruskal::execute()
 		}
 
 	}
-
+	cout << bufferMatrix;
 	cout << "Waga calkowita: " << MSTWeight << endl;
 
 	delete[] rank;
